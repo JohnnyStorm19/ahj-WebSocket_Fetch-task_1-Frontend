@@ -9,7 +9,7 @@ export default class ChatApp {
         this.parentEl = parentEl;
         this.login = login;
         this.responseObj = responseObj;
-        this.ws = new WebSocket('ws://localhost:7070');
+        this.ws = new WebSocket('wss://ahj-websocket-fetch-task-1-backend.onrender.com');
 
         this.onLogoutCallback = [];
     }

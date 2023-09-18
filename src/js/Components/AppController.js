@@ -5,7 +5,7 @@ import AddModal from './modals/addModal';
 export default class AppController {
     constructor(container) {
         this.container = container;
-        this.apiUrl = 'http://localhost:7070';
+        this.apiUrl = 'https://ahj-websocket-fetch-task-1-backend.onrender.com';
         this.chatApi = new ChatAPI(this.apiUrl);
         this.chatApp;
     }
