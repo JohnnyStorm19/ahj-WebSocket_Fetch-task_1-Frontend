@@ -10,6 +10,8 @@ export default class ChatApp {
         this.login = login;
         this.responseObj = responseObj;
         this.ws = new WebSocket('ws://localhost:7070');
+
+        this.onLogoutCallback = [];
     }
     static getChatAppMarkup() {
         return `
@@ -23,6 +25,7 @@ export default class ChatApp {
                     </form>
                     <span class="aside-menu-toggler"></span>
                 </div>
+                <button type="button" class="button-logout">Выйти</button>
             </div>
         `
     }
@@ -37,6 +40,7 @@ export default class ChatApp {
         this.formMessage = document.querySelector('.chat-form');
         this.usersPreviewContainer = document.querySelector('.users-preview-container');
         this.asideMenuToggler = document.querySelector('.aside-menu-toggler');
+        this.btnLogout = document.querySelector('.button-logout');
 
         // отрисуем сообщения для тех, кто подключился не сразу
         if (this.responseObj.messages && this.responseObj.messages.length) {
@@ -51,6 +55,7 @@ export default class ChatApp {
     addListeners = () => {
         this.formMessage.addEventListener('submit', this.onSubmit);
         this.asideMenuToggler.addEventListener('click', this.toggleAsideMenu);
+        this.btnLogout.addEventListener('click', this.onLogoutBtn);
     } 
 
     renderMessages = (messageObj) => {
@@ -58,11 +63,6 @@ export default class ChatApp {
             let messageEl = new Message(messageObj);
             let scrollY = this.messagesContainer.scrollHeight;
 
-            // if (this.login === messageObj.login) {
-            //     messageMarkup = messageEl.getSendMessageMarkup();
-            // } else {
-            //     messageMarkup = messageEl.getRecievedMessageMarkup(messageObj.login);
-            // }
             this.login === messageObj.login 
             ? messageMarkup = messageEl.getSendMessageMarkup()
             : messageMarkup = messageEl.getRecievedMessageMarkup(messageObj.login);
@@ -110,6 +110,17 @@ export default class ChatApp {
         const messageObj = { message: message, login: this.login, date: dayjs().format('DD.MM.YYYY HH:mm') };
         this.ws.send(JSON.stringify(messageObj));
         this.inputMessage.value = '';
+    }
+
+    onLogoutBtn = (e) => {
+        e.preventDefault();
+        const loginObj = this.responseObj.loginData.find(loginObj => loginObj.login === this.login);
+
+        this.onLogoutCallback.forEach(callback => callback.call(null, loginObj.id));
+    }
+
+    addOnDeleteListener(callback) {
+        this.onLogoutCallback.push(callback);
     }
 
     toggleAsideMenu = () => {

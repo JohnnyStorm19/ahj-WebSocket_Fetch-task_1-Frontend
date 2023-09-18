@@ -45,5 +45,18 @@ export default class AppController {
         this.chatApp = new ChatApp(this.container, login, response);
         this.closeAllModals();
         this.chatApp.init();
+
+        // добавляю коллбек для удаления логина при выходе
+        this.chatApp.addOnDeleteListener(this.onDelete.bind(this));
+    }
+
+    async onDelete(id) {
+        const response = await this.chatApi.delete(id);
+        console.log(response);
+        if (!response.success) {
+            console.error(response.error);
+            return;
+        }
+        location.reload() // перезагружаю страницу для вызова модального окна
     }
 }
