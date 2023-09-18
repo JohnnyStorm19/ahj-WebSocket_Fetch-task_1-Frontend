@@ -1,0 +1,62 @@
+.modal {
+    width: 30rem;
+    min-height: 10rem;
+    padding: 1rem;
+    background-color: var(--main-bg-color);
+    position: absolute;
+    box-shadow: 0 0 0 50vmax rgba(0, 0, 0, 0.629);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    color: rgb(56, 50, 50);
+}
+.modal-change-form {
+    display: flex;
+    flex-direction: column;
+}
+.modal-title {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.inputs-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+.inputs-wrapper label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.modal input {
+    border-radius: 15px;
+    border: 1px solid rgba(59, 65, 69, 0.20);
+    padding: 1rem 2rem;
+}
+.buttons-wrapper {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+}
+.modal .ticket-description-input {
+    height: 3rem;
+}
+.modal button {
+    padding: 10px;
+    color: #FFFFFF;
+    border-radius: 10px;
+    background: var(--btn-color);
+    box-shadow: 10px 10px 46px 0px rgba(106, 106, 106, 0.22), -10px -10px 22px 0px rgba(249, 249, 249, 0.15);
+
+}
+.modal button:hover {
+    background-color: #715cf7;
+}
+
+.modal button[type="submit"] {
+    width: 4rem;
+}
